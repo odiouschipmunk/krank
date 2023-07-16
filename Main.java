@@ -21,7 +21,7 @@ public class Main {
 
             public void actionPerformed(ActionEvent e) {
                 todos.add(textField.getText());
-                
+                 
             }
 
         });
