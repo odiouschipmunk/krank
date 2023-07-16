@@ -1,4 +1,6 @@
 import javax.swing.*;
+
+import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
@@ -10,9 +12,11 @@ public class Main {
     static JButton see = new JButton("See all that you have to do today");
     static JButton back = new JButton("Back");
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException, InstantiationException,
+            IllegalAccessException, UnsupportedLookAndFeelException {
+        UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         mainframe.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        mainframe.setUndecorated(true);
+        mainframe.setLayout(new FlowLayout());
         mainMenu();
 
         ArrayList<String> todos = new ArrayList<String>();
@@ -21,7 +25,7 @@ public class Main {
 
             public void actionPerformed(ActionEvent e) {
                 todos.add(textField.getText());
-                
+
             }
 
         });
@@ -31,18 +35,25 @@ public class Main {
             public void actionPerformed(ActionEvent e) {
                 mainframe.getContentPane().removeAll();
                 mainframe.repaint();
-                System.out.println(todos.toString());
                 back.setBounds(450, 500, 200, 40);
 
-                
                 mainframe.add(back);
-                back.addActionListener(new ActionListener(){
+                back.addActionListener(new ActionListener() {
 
                     public void actionPerformed(ActionEvent e) {
                         mainMenu();
                     }
-                    
+
                 });
+
+                JCheckBox c1 = new JCheckBox("checkbox 1");
+                JCheckBox c2 = new JCheckBox("checkbox 2");
+                JPanel p = new JPanel();
+                p.add(c1);
+                p.add(c2);
+                mainframe.add(c1);
+                mainframe.add(c2);
+                mainframe.add(p);
             }
         });
         mainframe.add(see);
