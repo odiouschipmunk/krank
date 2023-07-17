@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -14,6 +15,8 @@ public class Main {
 
     public static void main(String[] args) throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, UnsupportedLookAndFeelException {
+        mainframe.setLocationRelativeTo(null);
+        mainframe.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         mainframe.setExtendedState(JFrame.MAXIMIZED_BOTH);
         mainframe.setLayout(new FlowLayout());
@@ -35,9 +38,26 @@ public class Main {
             public void actionPerformed(ActionEvent e) {
                 mainframe.getContentPane().removeAll();
                 mainframe.repaint();
-                back.setBounds(450, 500, 200, 40);                
-                JList<String> list=new JList(todos.toArray());
+                back.setBounds(450, 500, 200, 40);
+
+                Container contentPane = mainframe.getContentPane();
+                contentPane.setLayout(new BorderLayout());
+
+                ListModel<String> listModel = createListModel();
+                ListSelectionDocument listSelectionDocument = new ListSelectionDocument();
+
+                JList<String> list = new JList<String>();
                 list.setCellRenderer(new CheckboxListCellRenderer<String>());
+                list.setModel(listModel);
+                list.addListSelectionListener(listSelectionDocument);
+
+                JTextArea listSelectionTextArea = new JTextArea(listSelectionDocument);
+                Border loweredBevelBorder = BorderFactory.createLoweredBevelBorder();
+                listSelectionTextArea.setBorder(loweredBevelBorder);
+
+                contentPane.add(list, BorderLayout.CENTER);
+                contentPane.add(listSelectionTextArea, BorderLayout.SOUTH);
+
                 mainframe.add(back);
                 back.addActionListener(new ActionListener() {
 
@@ -47,7 +67,6 @@ public class Main {
 
                 });
 
-                
                 mainframe.add(back);
                 mainframe.add(list);
             }
@@ -73,5 +92,16 @@ public class Main {
         mainframe.add(textField);
         mainframe.add(button);
         mainframe.add(see);
+    }
+
+    public static DefaultListModel<String> createListModel() {
+        DefaultListModel<String> listModel = new DefaultListModel<String>();
+
+        listModel.addElement("Element 1");
+        listModel.addElement("Element 2");
+        listModel.addElement("Element 3");
+        listModel.addElement("Element 4");
+
+        return listModel;
     }
 }

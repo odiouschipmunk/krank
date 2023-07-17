@@ -1,7 +1,18 @@
-import java.awt.*;
 
-import javax.swing.*;
 
+import java.awt.Component;
+
+import javax.swing.JCheckBox;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
+
+/**
+ * A {@link ListCellRenderer} that uses a {@link JCheckBox} to render list
+ * elements.
+ *
+ * @author René Link [rene.link@link-intersystems.com]
+ *
+ */
 public class CheckboxListCellRenderer<E> extends JCheckBox implements
 		ListCellRenderer<E> {
 

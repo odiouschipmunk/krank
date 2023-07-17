@@ -1,4 +1,4 @@
-package com.link_intersystems.blog.swing.list;
+
 
 import java.awt.BorderLayout;
 import java.awt.Container;
