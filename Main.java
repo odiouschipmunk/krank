@@ -35,8 +35,9 @@ public class Main {
             public void actionPerformed(ActionEvent e) {
                 mainframe.getContentPane().removeAll();
                 mainframe.repaint();
-                back.setBounds(450, 500, 200, 40);
-
+                back.setBounds(450, 500, 200, 40);                
+                JList<String> list=new JList(todos.toArray());
+                list.setCellRenderer(new CheckboxListCellRenderer<String>());
                 mainframe.add(back);
                 back.addActionListener(new ActionListener() {
 
@@ -46,14 +47,9 @@ public class Main {
 
                 });
 
-                JCheckBox c1 = new JCheckBox("checkbox 1");
-                JCheckBox c2 = new JCheckBox("checkbox 2");
-                JPanel p = new JPanel();
-                p.add(c1);
-                p.add(c2);
-                mainframe.add(c1);
-                mainframe.add(c2);
-                mainframe.add(p);
+                
+                mainframe.add(back);
+                mainframe.add(list);
             }
         });
         mainframe.add(see);
