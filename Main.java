@@ -58,7 +58,6 @@ public class Main {
                 contentPane.add(list, BorderLayout.CENTER);
                 contentPane.add(listSelectionTextArea, BorderLayout.SOUTH);
 
-                mainframe.add(back);
                 back.addActionListener(new ActionListener() {
 
                     public void actionPerformed(ActionEvent e) {
@@ -66,9 +65,8 @@ public class Main {
                     }
 
                 });
-
                 mainframe.add(back);
-                mainframe.add(list);
+
             }
         });
         mainframe.add(see);
