@@ -1,6 +1,4 @@
 import javax.swing.*;
-import javax.swing.border.Border;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -12,6 +10,7 @@ public class Main {
     static JButton button = new JButton("Enter");
     static JButton see = new JButton("See all that you have to do today");
     static JButton back = new JButton("Back");
+    static DefaultListModel<String> listModel = new DefaultListModel<String>();
 
     public static void main(String[] args) throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, UnsupportedLookAndFeelException {
@@ -19,7 +18,7 @@ public class Main {
         mainframe.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         mainframe.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        mainframe.setLayout(new FlowLayout());
+        mainframe.setLayout(new BorderLayout());
         mainMenu();
 
         ArrayList<String> todos = new ArrayList<String>();
@@ -28,7 +27,9 @@ public class Main {
 
             public void actionPerformed(ActionEvent e) {
                 todos.add(textField.getText());
-
+                for (var i = 0; i < todos.size(); i++) {
+                    listModel.add(i, todos.get(i));
+                }
             }
 
         });
@@ -36,7 +37,12 @@ public class Main {
         see.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                report();
+                try {
+                    report();
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                        | UnsupportedLookAndFeelException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
         mainframe.add(see);
@@ -63,49 +69,43 @@ public class Main {
     }
 
     public static DefaultListModel<String> createListModel() {
-        DefaultListModel<String> listModel = new DefaultListModel<String>();
-
-        listModel.addElement("Element 1");
-        listModel.addElement("Element 2");
-        listModel.addElement("Element 3");
-        listModel.addElement("Element 4");
 
         return listModel;
     }
 
-    public static void report(){
+    public static void report() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
+            UnsupportedLookAndFeelException {
         mainframe.getContentPane().removeAll();
-                mainframe.repaint();
-                back.setBounds(450, 500, 200, 40);
+        mainframe.repaint();
+        UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 
-                Container contentPane = mainframe.getContentPane();
-                contentPane.setLayout(new BorderLayout());
+        Container contentPane = mainframe.getContentPane();
+        back.setBounds(450, 500, 200, 40);
 
-                ListModel<String> listModel = createListModel();
-                ListSelectionDocument listSelectionDocument = new ListSelectionDocument();
+        ListModel<String> listModel = createListModel();
+        ListSelectionDocument listSelectionDocument = new ListSelectionDocument();
 
-                JList<String> list = new JList<String>();
-                list.setCellRenderer(new CheckboxListCellRenderer<String>());
-                list.setModel(listModel);
-                list.addListSelectionListener(listSelectionDocument);
+        JList<String> list = new JList<String>();
+        list.setCellRenderer(new CheckboxListCellRenderer<String>());
+        list.setModel(listModel);
+        list.addListSelectionListener(listSelectionDocument);
+        list.setBounds(1500, 500, 500, 400);
 
-                JTextArea listSelectionTextArea = new JTextArea(listSelectionDocument);
-                Border loweredBevelBorder = BorderFactory.createLoweredBevelBorder();
-                listSelectionTextArea.setBorder(loweredBevelBorder);
+        contentPane.add(list);
+        for(var i=0;i<listModel.getSize();i++){
+            listModel.
+        }
+        back.addActionListener(new ActionListener() {
 
-                contentPane.add(list, BorderLayout.CENTER);
-                contentPane.add(listSelectionTextArea, BorderLayout.SOUTH);
+            public void actionPerformed(ActionEvent e) {
+                mainMenu();
+            }
 
-                back.addActionListener(new ActionListener() {
+        });
 
-                    public void actionPerformed(ActionEvent e) {
-                        mainMenu();
-                    }
-
-                });
-                mainframe.add(back);
-                mainframe.validate();
-                contentPane.setVisible(true);
-                mainframe.setVisible(true);
+        mainframe.add(back, BorderLayout.SOUTH);
+        mainframe.validate();
+        contentPane.setVisible(true);
+        mainframe.setVisible(true);
     }
 }
