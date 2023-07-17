@@ -36,37 +36,7 @@ public class Main {
         see.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                mainframe.getContentPane().removeAll();
-                mainframe.repaint();
-                back.setBounds(450, 500, 200, 40);
-
-                Container contentPane = mainframe.getContentPane();
-                contentPane.setLayout(new BorderLayout());
-
-                ListModel<String> listModel = createListModel();
-                ListSelectionDocument listSelectionDocument = new ListSelectionDocument();
-
-                JList<String> list = new JList<String>();
-                list.setCellRenderer(new CheckboxListCellRenderer<String>());
-                list.setModel(listModel);
-                list.addListSelectionListener(listSelectionDocument);
-
-                JTextArea listSelectionTextArea = new JTextArea(listSelectionDocument);
-                Border loweredBevelBorder = BorderFactory.createLoweredBevelBorder();
-                listSelectionTextArea.setBorder(loweredBevelBorder);
-
-                contentPane.add(list, BorderLayout.CENTER);
-                contentPane.add(listSelectionTextArea, BorderLayout.SOUTH);
-
-                back.addActionListener(new ActionListener() {
-
-                    public void actionPerformed(ActionEvent e) {
-                        mainMenu();
-                    }
-
-                });
-                mainframe.add(back);
-
+                report();
             }
         });
         mainframe.add(see);
@@ -101,5 +71,41 @@ public class Main {
         listModel.addElement("Element 4");
 
         return listModel;
+    }
+
+    public static void report(){
+        mainframe.getContentPane().removeAll();
+                mainframe.repaint();
+                back.setBounds(450, 500, 200, 40);
+
+                Container contentPane = mainframe.getContentPane();
+                contentPane.setLayout(new BorderLayout());
+
+                ListModel<String> listModel = createListModel();
+                ListSelectionDocument listSelectionDocument = new ListSelectionDocument();
+
+                JList<String> list = new JList<String>();
+                list.setCellRenderer(new CheckboxListCellRenderer<String>());
+                list.setModel(listModel);
+                list.addListSelectionListener(listSelectionDocument);
+
+                JTextArea listSelectionTextArea = new JTextArea(listSelectionDocument);
+                Border loweredBevelBorder = BorderFactory.createLoweredBevelBorder();
+                listSelectionTextArea.setBorder(loweredBevelBorder);
+
+                contentPane.add(list, BorderLayout.CENTER);
+                contentPane.add(listSelectionTextArea, BorderLayout.SOUTH);
+
+                back.addActionListener(new ActionListener() {
+
+                    public void actionPerformed(ActionEvent e) {
+                        mainMenu();
+                    }
+
+                });
+                mainframe.add(back);
+                mainframe.validate();
+                contentPane.setVisible(true);
+                mainframe.setVisible(true);
     }
 }
