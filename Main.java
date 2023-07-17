@@ -10,7 +10,7 @@ public class Main {
     static JButton button = new JButton("Enter");
     static JButton see = new JButton("See all that you have to do today");
     static JButton back = new JButton("Back");
-    static DefaultListModel<String> listModel = new DefaultListModel<String>();
+    static ArrayList<String> todos = new ArrayList<String>();
 
     public static void main(String[] args) throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, UnsupportedLookAndFeelException {
@@ -21,15 +21,11 @@ public class Main {
         mainframe.setLayout(new BorderLayout());
         mainMenu();
 
-        ArrayList<String> todos = new ArrayList<String>();
-
         button.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 todos.add(textField.getText());
-                for (var i = 0; i < todos.size(); i++) {
-                    listModel.add(i, todos.get(i));
-                }
+
             }
 
         });
@@ -68,33 +64,22 @@ public class Main {
         mainframe.add(see);
     }
 
-    public static DefaultListModel<String> createListModel() {
-
-        return listModel;
-    }
-
     public static void report() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
             UnsupportedLookAndFeelException {
         mainframe.getContentPane().removeAll();
         mainframe.repaint();
         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 
-        Container contentPane = mainframe.getContentPane();
-        back.setBounds(450, 500, 200, 40);
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        ArrayList<JCheckBox> checkboxes = new ArrayList<>();
 
-        ListModel<String> listModel = createListModel();
-        ListSelectionDocument listSelectionDocument = new ListSelectionDocument();
-
-        JList<String> list = new JList<String>();
-        list.setCellRenderer(new CheckboxListCellRenderer<String>());
-        list.setModel(listModel);
-        list.addListSelectionListener(listSelectionDocument);
-        list.setBounds(1500, 500, 500, 400);
-
-        contentPane.add(list);
-        for(var i=0;i<listModel.getSize();i++){
-            listModel.
+        for (String element : todos) {
+            JCheckBox box = new JCheckBox(element);
+            checkboxes.add(box);
+            panel.add(box);
         }
+
         back.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
@@ -102,10 +87,13 @@ public class Main {
             }
 
         });
-
-        mainframe.add(back, BorderLayout.SOUTH);
+        back.setBounds(450, 500, 200, 40);
+        mainframe.add(panel);
+        
+        mainframe.add(back);
         mainframe.validate();
-        contentPane.setVisible(true);
+        panel.validate();
+        panel.setVisible(true);
         mainframe.setVisible(true);
     }
 }
