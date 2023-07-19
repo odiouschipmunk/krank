@@ -78,8 +78,9 @@ public class Main {
             JCheckBox box = new JCheckBox(element);
             checkboxes.add(box);
             panel.add(box);
+            System.out.println("box "+element+" added");
         }
-
+       
         back.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
