@@ -13,11 +13,11 @@ public class Main {
 
     public static void main(String[] args) throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, UnsupportedLookAndFeelException {
+                mainframe.setAlwaysOnTop(true);
         mainframe.setLocationRelativeTo(null);
         mainframe.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        mainframe.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        mainframe.setLayout(new BorderLayout());
+                mainframe.setSize(300, 500);
         mainMenu();
 
         button.addActionListener(e -> todos.add(textField.getText()));
@@ -43,10 +43,10 @@ public class Main {
     public static void mainMenu() {
         mainframe.getContentPane().removeAll();
         mainframe.repaint();
-        text.setBounds(350, 350, 1000, 20);
-        textField.setBounds(550, 350, 100, 20);
-        button.setBounds(475, 450, 150, 20);
-        see.setBounds(770, 500, 300, 150);
+       text.setBounds(50, 0, 1000, 20);
+        textField.setBounds(50, 50, 100, 20);
+         button.setBounds(75, 150, 150, 20);
+        see.setBounds(50, 350, 150, 50);
         mainframe.add(text);
         mainframe.add(textField);
         mainframe.add(button);
@@ -66,7 +66,7 @@ public class Main {
 
         JPanel panel = new JPanel();
         ArrayList<JCheckBox> checkboxes = new ArrayList<>();
-        
+        panel.setBounds(0,0,300,500);
         for(String element : todos) {
             JCheckBox box = new JCheckBox(element, false);
             checkboxes.add(box);
