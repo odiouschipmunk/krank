@@ -55,29 +55,47 @@ public class Main {
 
     public static void report() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
             UnsupportedLookAndFeelException {
+                
         mainframe.getContentPane().removeAll();
         mainframe.repaint();
-        UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        mainframe.setLayout(new FlowLayout());        
+        back.setBounds(250, 750, 300, 50);
+                back.addActionListener(e -> {
+                    mainMenu();
+                });
 
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         ArrayList<JCheckBox> checkboxes = new ArrayList<>();
-
-        for (String element : todos) {
-            JCheckBox box = new JCheckBox(element);
+        
+        for(String element : todos) {
+            JCheckBox box = new JCheckBox(element, false);
             checkboxes.add(box);
             panel.add(box);
-            System.out.println("box "+element+" added");
         }
-       
-        back.addActionListener(e -> mainMenu());
-        back.setBounds(450, 500, 200, 40);
+
+        JButton finish=new JButton("Finish");
+        finish.addActionListener(e -> {
+
+            for(var i=0;i<checkboxes.size();i++){
+                if(checkboxes.get(i).isSelected()){
+                    
+                    mainframe.remove(checkboxes.get(i));
+                    panel.remove(checkboxes.get(i));
+                    checkboxes.remove(i);
+                    mainframe.repaint();
+                    mainframe.validate();
+                }
+            }
+        });
+        finish.setBounds(500, 600, 400, 100);
+        mainframe.add(back);   
         mainframe.add(panel);
-        
-        mainframe.add(back);
+        mainframe.add(finish);
+
         mainframe.validate();
-        panel.validate();
-        panel.setVisible(true);
         mainframe.setVisible(true);
     }
+
+
+ 
 }
