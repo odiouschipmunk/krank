@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.util.ArrayList;
 
 public class Main {
@@ -10,7 +9,7 @@ public class Main {
     static JButton button = new JButton("Enter");
     static JButton see = new JButton("See all that you have to do today");
     static JButton back = new JButton("Back");
-    static ArrayList<String> todos = new ArrayList<String>();
+    static ArrayList<String> todos = new ArrayList<>();
 
     public static void main(String[] args) throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, UnsupportedLookAndFeelException {
@@ -21,24 +20,14 @@ public class Main {
         mainframe.setLayout(new BorderLayout());
         mainMenu();
 
-        button.addActionListener(new ActionListener() {
+        button.addActionListener(e -> todos.add(textField.getText()));
 
-            public void actionPerformed(ActionEvent e) {
-                todos.add(textField.getText());
-
-            }
-
-        });
-
-        see.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    report();
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-                        | UnsupportedLookAndFeelException e1) {
-                    e1.printStackTrace();
-                }
+        see.addActionListener(e -> {
+            try {
+                report();
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                    | UnsupportedLookAndFeelException e1) {
+                e1.printStackTrace();
             }
         });
         mainframe.add(see);
@@ -81,13 +70,7 @@ public class Main {
             System.out.println("box "+element+" added");
         }
        
-        back.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                mainMenu();
-            }
-
-        });
+        back.addActionListener(e -> mainMenu());
         back.setBounds(450, 500, 200, 40);
         mainframe.add(panel);
         
